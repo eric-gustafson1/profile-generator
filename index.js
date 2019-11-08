@@ -4,28 +4,28 @@ const generateHTML = require("./generateHTML");
 const chalk = require("chalk");
 const filename = "index.html";
 
-const questions = [];
+const questions = ["Enter your GitHub username:", "Select your favorite color:"];
 
 function writeToFile(filename, data) {
   fs.writeFile(filename, data, function(err) {
     if (err) {
       return console.log(err);
     }
-    console.log(chaulk.green("File written successfully"));
+    console.log(chalk.green("File written successfully"));
   });
 }
 
-function init() {
+function init(questions) {
   inquirer
     .prompt([
       {
         type: "input",
-        name: "userName",
-        message: "Enter your GitHub username:"
+        name: "username",
+        message: questions[0]
       },
       {
         type: "list",
-        message: "Select your favorite color:",
+        message: questions[1],
         name: "color",
         choices: ["green", "blue", "pink", "red"]
       }
@@ -37,4 +37,22 @@ function init() {
     });
 }
 
-init();
+init(questions);
+
+// .then(function({ username }) {
+//   const queryUrl = `https://api.github.com/users/${username}/repos?per_page=100`;
+
+//   axios.get(queryUrl).then(function(res) {
+//     // const repoList = res.data.map(repo => repo.name);
+//     // console.log(repoList);
+
+//     // const repoNameStr = repoList.join("\n");
+//     // console.log(repoNameStr);
+
+//     console.log(res.data)
+//   })
+// .then(function(data) {
+//   console.log(data.color);
+//   const page = generateHTML.generateHTML(data);
+//   writeToFile(filename, page);
+// });

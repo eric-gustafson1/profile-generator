@@ -171,28 +171,36 @@ function generateHTML(data) {
             } 
            }
         </style>
-        <body>
-    <div class="wrapper">
-      <div class="photo-header">
-        <img src="" alt="" />
-        <h2>Hello!</h2>
-        <h2>My name is</h2>
-      </div>
-      <main>
-        <h1>Bio:</h1>
-
-        <div class="row">
-          <div class="card col">Public Repositories</div>
-          <div class="card col">Followers</div>
-        </div>
-        <div class="row">
-          <div class="card col">GitHub Starts</div>
-          <div class="card col">Following</div>
-        </div>
-      </main>
-    </div>
-  </body>
-</html>`;
+        </head>
+        <body class="wrapper">
+          <div class="photo-header">
+            <img src="" alt="" />
+            <h2>Hello!</h2>
+            <h2>My name is</h2>
+            <div class="links-nav">
+              <a href="" class="nav-link">location</a>
+              <a href="" class="nav-link">GitHub</a>
+              <a href="" class="nav-link">Blog</a>
+            </div>
+          </div>
+          <!--end photo-header-->
+          <main class="container">
+            <h1>Bio:</h1>
+      
+            <div class="row">
+              <div class="card col">Public Repositories</div>
+              <div class="card col">Followers</div>
+            </div>
+            <!--end first row-->
+            <div class="row">
+              <div class="card col">GitHub Starts</div>
+              <div class="card col">Following</div>
+            </div>
+            <!--end second row-->
+          </main>
+        </body>
+      </html>
+      `;
 }
 
 module.exports.generateHTML = generateHTML;
