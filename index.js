@@ -56,22 +56,4 @@ function init() {
     });
 }
 
-init(questions);
-
-// .then(function({ username }) {
-//   const queryUrl = `https://api.github.com/users/${username}/repos?per_page=100`;
-
-//   axios.get(queryUrl).then(function(res) {
-//     // const repoList = res.data.map(repo => repo.name);
-//     // console.log(repoList);
-
-//     // const repoNameStr = repoList.join("\n");
-//     // console.log(repoNameStr);
-
-//     console.log(res.data)
-//   })
-// .then(function(data) {
-//   console.log(data.color);
-//   const page = generateHTML.generateHTML(data);
-//   writeToFile(filename, page);
-// });
+init();

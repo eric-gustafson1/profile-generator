@@ -184,7 +184,7 @@ function generateBody(res) {
     <h2>My name is ${res.data.name}</h2>
     <h5>Currently @ ${res.data.company} </h5>
     <div class="links-nav">
-      <a target="_blank" href="" class="nav-link"><i class="fas fa-location-arrow"></i> ${res.data.location}</a>
+      <a target="_blank" href="https://www.google.com/maps/place/${res.data.location}" class="nav-link"><i class="fas fa-location-arrow"></i> ${res.data.location}</a>
       <a target="_blank" href="${res.data.html_url}" class="nav-link"><i class="fab fa-github-square"></i> GitHub</a>
       <a target="_blank" href="${res.data.blog}" class="nav-link"> <i class="fas fa-rss-square"></i> Blog</a>
     </div>
