@@ -191,7 +191,7 @@ function generateBody(res) {
   </div>
   <!--end photo-header-->
   <main class="container">
-    <h1>Bio:</h1>
+    <h3>${res.data.bio}</h3>
 
     <div class="row">
       <div class="card col">Public Repositories</div>
