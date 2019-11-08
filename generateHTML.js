@@ -3,7 +3,7 @@ const colors = {
     wrapperBackground: "#E6E1C3",
     headerBackground: "#C1C72C",
     headerColor: "black",
-    photoBorderColor: "#black"
+    photoBorderColor: "black"
   },
   blue: {
     wrapperBackground: "#5F64D3",
@@ -179,13 +179,14 @@ function generateHTML(data) {
 function generateBody(res) {
   return `<body class="wrapper">
   <div class="photo-header">
-    <img src="${res.data[0].owner.avatar_url}" alt="" />
+    <img src="${res.data.avatar_url}" alt="" />
     <h2>Hello!</h2>
-    <h2>My name is</h2>
+    <h2>My name is ${res.data.name}</h2>
+    <h5>Currently @ ${res.data.company} </h5>
     <div class="links-nav">
-      <a href="" class="nav-link">location</a>
-      <a href="" class="nav-link">GitHub</a>
-      <a href="" class="nav-link">Blog</a>
+      <a target="_blank" href="" class="nav-link"><i class="fas fa-location-arrow"></i> ${res.data.location}</a>
+      <a target="_blank" href="${res.data.html_url}" class="nav-link"><i class="fab fa-github-square"></i> GitHub</a>
+      <a target="_blank" href="${res.data.blog}" class="nav-link"> <i class="fas fa-rss-square"></i> Blog</a>
     </div>
   </div>
   <!--end photo-header-->
