@@ -1,10 +1,19 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
+const generateHTML = require("./generateHTML");
 const chalk = require("chalk");
+const filename = "index.html";
 
 const questions = [];
 
-function writeToFile(fileName, data) {}
+function writeToFile(filename, data) {
+  fs.writeFile(filename, data, function(err) {
+    if (err) {
+      return console.log(err);
+    }
+    console.log(chaulk.green("File written successfully"));
+  });
+}
 
 function init() {
   inquirer
@@ -22,7 +31,9 @@ function init() {
       }
     ])
     .then(function(data) {
-      console.log(data);
+      console.log(data.color);
+      const page = generateHTML.generateHTML(data);
+      writeToFile(page);
     });
 }
 
