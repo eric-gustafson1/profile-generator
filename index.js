@@ -33,7 +33,7 @@ function init() {
     .then(function(data) {
       console.log(data.color);
       const page = generateHTML.generateHTML(data);
-      writeToFile(page);
+      writeToFile(filename, page);
     });
 }
 

@@ -170,7 +170,29 @@ function generateHTML(data) {
               zoom: .75; 
             } 
            }
-        </style>`;
+        </style>
+        <body>
+    <div class="wrapper">
+      <div class="photo-header">
+        <img src="" alt="" />
+        <h2>Hello!</h2>
+        <h2>My name is</h2>
+      </div>
+      <main>
+        <h1>Bio:</h1>
+
+        <div class="row">
+          <div class="card col">Public Repositories</div>
+          <div class="card col">Followers</div>
+        </div>
+        <div class="row">
+          <div class="card col">GitHub Starts</div>
+          <div class="card col">Following</div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>`;
 }
 
 module.exports.generateHTML = generateHTML;
