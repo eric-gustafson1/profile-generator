@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/eric-gustafson1/profile-generator#readme",
   "dependencies": {
+    "axios": "^0.19.0",
     "chalk": "^2.4.2",
     "fs": "0.0.1-security",
     "inquirer": "^7.0.0"

@@ -1,9 +1,9 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-const generateHTML = require("./generateHTML");
+const axios = require("axios");
 const chalk = require("chalk");
+const generateHTML = require("./generateHTML");
 const filename = "index.html";
-
 const questions = ["Enter your GitHub username:", "Select your favorite color:"];
 
 function writeToFile(filename, data) {
@@ -15,7 +15,7 @@ function writeToFile(filename, data) {
   });
 }
 
-function init(questions) {
+function init() {
   inquirer
     .prompt([
       {
@@ -31,10 +31,15 @@ function init(questions) {
       }
     ])
     .then(function(data) {
-      console.log(data.color);
-      const page = generateHTML.generateHTML(data);
-      writeToFile(filename, page);
+      const queryUrl = `https://api.github.com/users/${data.username}/repos?per_page=100`;
+      axios.get(queryUrl).then(function(res) {
+        console.log(res.data);
+      });
     });
+  // .then(function(data) {
+  //   const page = generateHTML.generateHTML(data);
+  //   writeToFile(filename, page);
+  // });
 }
 
 init(questions);
