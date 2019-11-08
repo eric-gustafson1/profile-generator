@@ -45,13 +45,14 @@ function init() {
       return data;
     })
     .then(function(data) {
-      const queryUrl = `https://api.github.com/users/${data.username}/repos?per_page=100`;
-      axios.get(queryUrl).then(function(res) {
-        // console.log(res.data);
-      });
+      const queryUrl = `https://api.github.com/users/${data.username}/repos?per_page=1`;
+      const followUrl = `https://api.github.com/users/${data.username}/followers`;
 
-      const htmlBody = generateHTML.generateBody();
-      appendToFile(filename, htmlBody);
+      axios.get(queryUrl).then(function(res) {
+        console.log(res.data[0].owner.avatar_url);
+        const htmlBody = generateHTML.generateBody(res);
+        appendToFile(filename, htmlBody);
+      });
     });
 }
 

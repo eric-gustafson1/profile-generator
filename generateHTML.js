@@ -176,10 +176,10 @@ function generateHTML(data) {
       `;
 }
 
-function generateBody(data) {
+function generateBody(res) {
   return `<body class="wrapper">
   <div class="photo-header">
-    <img src="" alt="" />
+    <img src="${res.data[0].owner.avatar_url}" alt="" />
     <h2>Hello!</h2>
     <h2>My name is</h2>
     <div class="links-nav">
