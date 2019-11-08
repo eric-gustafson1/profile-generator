@@ -15,6 +15,15 @@ function writeToFile(filename, data) {
   });
 }
 
+function appendToFile(filename, data) {
+  fs.appendFile(filename, data, function(err) {
+    if (err) {
+      return console.log(err);
+    }
+    console.log(chalk.green("File written successfully"));
+  });
+}
+
 function init() {
   inquirer
     .prompt([
@@ -31,15 +40,19 @@ function init() {
       }
     ])
     .then(function(data) {
+      const page = generateHTML.generateHTML(data);
+      writeToFile(filename, page);
+      return data;
+    })
+    .then(function(data) {
       const queryUrl = `https://api.github.com/users/${data.username}/repos?per_page=100`;
       axios.get(queryUrl).then(function(res) {
-        console.log(res.data);
+        // console.log(res.data);
       });
+
+      const htmlBody = generateHTML.generateBody();
+      appendToFile(filename, htmlBody);
     });
-  // .then(function(data) {
-  //   const page = generateHTML.generateHTML(data);
-  //   writeToFile(filename, page);
-  // });
 }
 
 init(questions);
