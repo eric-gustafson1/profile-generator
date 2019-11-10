@@ -2,6 +2,7 @@ const inquirer = require("inquirer");
 const fs = require("fs");
 const axios = require("axios");
 const chalk = require("chalk");
+var pdf = require("html-pdf");
 const generateHTML = require("./generateHTML");
 const filename = "index.html";
 const questions = ["Enter your GitHub username:", "Select your favorite color:"];
@@ -20,9 +21,11 @@ function appendToFile(filename, data) {
     if (err) {
       return console.log(err);
     }
-    console.log(chalk.green("File written successfully"));
+    console.log(chalk.green("File appended successfully"));
   });
 }
+
+function convertToPDF(filename) {}
 
 function init() {
   inquirer
@@ -46,14 +49,41 @@ function init() {
     })
     .then(function(data) {
       const queryUrl = `https://api.github.com/users/${data.username}`;
-      const followUrl = `https://api.github.com/users/${data.username}/followers`;
+      const starredUrl = `https://api.github.com/users/${data.username}/starred`;
 
-      axios.get(queryUrl).then(function(res) {
-        const htmlBody = generateHTML.generateBody(res);
+      axios.all([axios.get(queryUrl), axios.get(starredUrl)]).then(responseArr => {
+        const htmlBody = generateHTML.generateBody(responseArr);
         appendToFile(filename, htmlBody);
-        console.log(res.data.html_url);
       });
+
+      // return res;
     });
+  // .then(function(res) {
+  //   fs.readFile(filename, "utf8", function(err, html) {
+  //     if (err) {
+  //       console.log(err);
+  //     }
+  //     console.log(html);
+  //     const options = { format: "letter" };
+  //     pdf.create(html, options).toFile("./profile.pdf", function(err, res) {
+  //       if (err) return console.log(err);
+  //       console.log(res);
+  //     });
+  //     // return html;
+  //   });
+  // });
+  // .then(function(html) {
+  //   console.log(html);
+  //   const options = { format: "letter" };
+  //   pdf.create(html, options).toFile("./profile.pdf", function(err, res) {
+  //     if (err) return console.log(err);
+  //     console.log(res);
+  //   });
+  // });
 }
 
 init();
+
+// NPM for html to pdf
+// electron and electron-html-to
+// axios.all to get an array of response returns

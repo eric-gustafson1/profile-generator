@@ -176,36 +176,55 @@ function generateHTML(data) {
       `;
 }
 
-function generateBody(res) {
+function generateBody(responseArr) {
   return `<body class="wrapper">
   <div class="photo-header">
-    <img src="${res.data.avatar_url}" alt="" />
+    <img src="${responseArr[0].data.avatar_url}" alt="" />
     <h2>Hello!</h2>
-    <h2>My name is ${res.data.name}</h2>
-    <h5>Currently @ ${res.data.company} </h5>
+    <h2>My name is ${responseArr[0].data.name}</h2>
+    <h5>Currently @ ${responseArr[0].data.company} </h5>
     <div class="links-nav">
-      <a target="_blank" href="https://www.google.com/maps/place/${res.data.location}" class="nav-link"><i class="fas fa-location-arrow"></i> ${res.data.location}</a>
-      <a target="_blank" href="${res.data.html_url}" class="nav-link"><i class="fab fa-github-square"></i> GitHub</a>
-      <a target="_blank" href="${res.data.blog}" class="nav-link"> <i class="fas fa-rss-square"></i> Blog</a>
+      <a target="_blank" href="https://www.google.com/maps/place/${responseArr[0].data.location}" class="nav-link"><i class="fas fa-location-arrow"></i> ${responseArr[0].data.location}</a>
+      <a target="_blank" href="${responseArr[0].data.html_url}" class="nav-link"><i class="fab fa-github-square"></i> GitHub</a>
+      <a target="_blank" href="${responseArr[0].data.blog}" class="nav-link"> <i class="fas fa-rss-square"></i> Blog</a>
     </div>
   </div>
   <!--end photo-header-->
   <main class="container">
-    <h3>${res.data.bio}</h3>
+    <h3>${responseArr[0].data.bio}</h3>
 
     <div class="row">
-      <div class="card col">Public Repositories</div>
-      <div class="card col">Followers</div>
+      <div class="card col">
+        <h3>Public Repositories</h3>
+        <h4>${responseArr[0].data.public_repos}</h4>
+      </div>
+
+      <div class="card col">
+        <h3>Followers</h3>
+        <h4>${responseArr[0].data.followers}</h4>
+      </div>
     </div>
-    <!--end first row-->
-    <div class="row">
-      <div class="card col">GitHub Starts</div>
-      <div class="card col">Following</div>
-    </div>
-    <!--end second row-->
-  </main>
+
+  <div class="row">
+      <div class="card col">
+        <h3>GitHub Stars</h3>
+        <h4>${responseArr[1].data.length}</h4>
+      </div>
+
+      <div class="card col">
+        <h3>Following</h3>
+        <h4>${responseArr[0].data.following}</h4>
+      </div>
+  </div>
+</main>
+<footer>
+<div style="height: 300px">
+</div>
+</footer>
+
 </body>
-</html>`;
+</html>
+      `;
 }
 
 module.exports = {
