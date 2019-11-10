@@ -2,10 +2,25 @@ const inquirer = require("inquirer");
 const fs = require("fs");
 const axios = require("axios");
 const chalk = require("chalk");
-const convertFactory = require("electron-html-to");
 const generateHTML = require("./generateHTML");
 const filename = "index.html";
-const questions = ["Enter your GitHub username:", "Select your favorite color:"];
+const questions = [
+  {
+    type: "input",
+    name: "username",
+    message: "Enter your GitHub username:"
+  },
+  {
+    type: "list",
+    message: "Select your favorite color:",
+    name: "color",
+    choices: ["green", "blue", "pink", "red"]
+  }
+];
+
+const askQuestions = () => {
+  return inquirer.prompt(questions);
+};
 
 function writeToFile(filename, data) {
   fs.writeFile(filename, data, function(err) {
@@ -15,6 +30,12 @@ function writeToFile(filename, data) {
     console.log(chalk.green("File written successfully"));
   });
 }
+
+const getGitResponse = data => {
+  const queryUrl = `https://api.github.com/users/${data.username}`;
+  const starredUrl = `https://api.github.com/users/${data.username}/starred`;
+  return axios.all([axios.get(queryUrl), axios.get(starredUrl)]);
+};
 
 function appendToFile(filename, data) {
   fs.appendFile(filename, data, function(err) {
@@ -28,44 +49,24 @@ function appendToFile(filename, data) {
 function readFile() {
   fs.readFile("./index.html", (err, data) => {
     if (err) throw err;
-    console.log(data);
   });
 }
 
-function convertToPDF(filename) {}
+function convertToPDF() {
+  console.log(chalk.yellow("convert to PDF"));
+}
 
-function init() {
-  inquirer
-    .prompt([
-      {
-        type: "input",
-        name: "username",
-        message: questions[0]
-      },
-      {
-        type: "list",
-        message: questions[1],
-        name: "color",
-        choices: ["green", "blue", "pink", "red"]
-      }
-    ])
-    .then(function(data) {
-      const page = generateHTML.generateHTML(data);
-      writeToFile(filename, page);
-      return data;
-    })
-    .then(function(data) {
-      const queryUrl = `https://api.github.com/users/${data.username}`;
-      const starredUrl = `https://api.github.com/users/${data.username}/starred`;
-
-      axios.all([axios.get(queryUrl), axios.get(starredUrl)]).then(responseArr => {
-        const htmlBody = generateHTML.generateBody(responseArr);
-        appendToFile(filename, htmlBody);
-      });
-
-      // return responseArr;
-      readFile();
-    });
+async function init() {
+  try {
+    const data = await askQuestions();
+    const page = await generateHTML.generateHTML(data);
+    await writeToFile(filename, page);
+    const responseArr = await getGitResponse(data);
+    const htmlBody = await generateHTML.generateBody(responseArr);
+    await appendToFile(filename, htmlBody);
+  } catch {
+    console.log(chalk.inverse.yellow("there was an error"));
+  }
 }
 
 init();
