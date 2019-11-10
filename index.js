@@ -2,7 +2,7 @@ const inquirer = require("inquirer");
 const fs = require("fs");
 const axios = require("axios");
 const chalk = require("chalk");
-var pdf = require("html-pdf");
+const convertFactory = require("electron-html-to");
 const generateHTML = require("./generateHTML");
 const filename = "index.html";
 const questions = ["Enter your GitHub username:", "Select your favorite color:"];
@@ -22,6 +22,13 @@ function appendToFile(filename, data) {
       return console.log(err);
     }
     console.log(chalk.green("File appended successfully"));
+  });
+}
+
+function readFile() {
+  fs.readFile("./index.html", (err, data) => {
+    if (err) throw err;
+    console.log(data);
   });
 }
 
@@ -56,34 +63,9 @@ function init() {
         appendToFile(filename, htmlBody);
       });
 
-      // return res;
+      // return responseArr;
+      readFile();
     });
-  // .then(function(res) {
-  //   fs.readFile(filename, "utf8", function(err, html) {
-  //     if (err) {
-  //       console.log(err);
-  //     }
-  //     console.log(html);
-  //     const options = { format: "letter" };
-  //     pdf.create(html, options).toFile("./profile.pdf", function(err, res) {
-  //       if (err) return console.log(err);
-  //       console.log(res);
-  //     });
-  //     // return html;
-  //   });
-  // });
-  // .then(function(html) {
-  //   console.log(html);
-  //   const options = { format: "letter" };
-  //   pdf.create(html, options).toFile("./profile.pdf", function(err, res) {
-  //     if (err) return console.log(err);
-  //     console.log(res);
-  //   });
-  // });
 }
 
 init();
-
-// NPM for html to pdf
-// electron and electron-html-to
-// axios.all to get an array of response returns
