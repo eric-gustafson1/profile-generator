@@ -8,7 +8,8 @@ A command-line application that dynamically generates a PDF profile from a GitHu
 
 ![profile-generator](img/ScreenShot.png)
 
-#Usage
+# Usage
+
 Clone the application.
 Open with VS Code or another editor
 Open a terminal
