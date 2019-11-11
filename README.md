@@ -1,9 +1,11 @@
 # profile-generator
 
-#Description
+# Description
+
 A command-line application that dynamically generates a PDF profile from a GitHub username using Node.js.
 
-#Visuals
+# Visuals
+
 ![profile-generator](img/ScreenShot.png)
 
 #Usage
@@ -16,5 +18,6 @@ Answer the questions
 An index.html file is created based on the provide info
 A profile.pdf is created based on the index.html.
 
-#Link to project on GitHub
+# Link to project on GitHub
+
 [profile-generator](https://eric-gustafson1.github.io/profile-generator/)
