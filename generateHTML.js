@@ -25,7 +25,7 @@ const colors = {
   }
 };
 
-function generateHTML(data) {
+module.exports = function generateHTML(data, responseArr) {
   return `<!DOCTYPE html>
   <html lang="en">
      <head>
@@ -172,12 +172,7 @@ function generateHTML(data) {
            }
         </style>
         </head>
-
-      `;
-}
-
-function generateBody(responseArr) {
-  return `<body class="wrapper">
+  <body class="wrapper">
   <div class="photo-header">
     <img src="${responseArr[0].data.avatar_url}" alt="" />
     <h2>Hello!</h2>
@@ -225,9 +220,4 @@ function generateBody(responseArr) {
 </body>
 </html>
       `;
-}
-
-module.exports = {
-  generateHTML: generateHTML,
-  generateBody: generateBody
 };

@@ -1,7 +1,7 @@
 {
   "name": "profile-generator",
   "version": "1.0.0",
-  "description": "A command-line application that dynamically generates a PDF profile from a GitHub username using Node.js.",
+  "description": "A command line application that dynamically generates a PDF profile from a GitHub username.",
   "main": "index.js",
   "dependencies": {
     "axios": "^0.19.0",
@@ -11,6 +11,7 @@
     "electron-prebuilt": "^1.4.13",
     "fs": "0.0.1-security",
     "html-pdf": "^2.2.0",
+    "html-to-pdf": "^0.1.11",
     "inquirer": "^7.0.0"
   },
   "devDependencies": {},
@@ -21,8 +22,7 @@
     "type": "git",
     "url": "git+https://github.com/eric-gustafson1/profile-generator.git"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Eric Gustafson",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/eric-gustafson1/profile-generator/issues"

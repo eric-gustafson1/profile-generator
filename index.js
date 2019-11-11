@@ -2,6 +2,7 @@ const inquirer = require("inquirer");
 const fs = require("fs");
 const axios = require("axios");
 const chalk = require("chalk");
+const pdf = require("html-pdf");
 const generateHTML = require("./generateHTML");
 const filename = "index.html";
 const questions = [
@@ -22,14 +23,12 @@ const askQuestions = () => {
   return inquirer.prompt(questions);
 };
 
-function writeToFile(filename, data) {
+const writeToFile = (filename, data) => {
   fs.writeFile(filename, data, function(err) {
-    if (err) {
-      return console.log(err);
-    }
+    if (err) console.log(err);
     console.log(chalk.green("File written successfully"));
   });
-}
+};
 
 const getGitResponse = data => {
   const queryUrl = `https://api.github.com/users/${data.username}`;
@@ -37,35 +36,32 @@ const getGitResponse = data => {
   return axios.all([axios.get(queryUrl), axios.get(starredUrl)]);
 };
 
-function appendToFile(filename, data) {
-  fs.appendFile(filename, data, function(err) {
-    if (err) {
-      return console.log(err);
-    }
-    console.log(chalk.green("File appended successfully"));
+const readFromFile = page => {
+  fs.readFile(`${page}`, (err, data) => {
+    if (err) console.log(chalk.inverse.yellow(`Something went wrong: ${err}`));
+    return data;
   });
-}
+};
 
-function readFile() {
-  fs.readFile("./index.html", (err, data) => {
-    if (err) throw err;
+const convertToPDF = page => {
+  const options = {
+    format: "Legal"
+  };
+  pdf.create(page, options).toFile("./profile.pdf", function(err, res) {
+    if (err) return console.log(chalk.yellow(`Something went wrong ${err}`));
+    console.log(chalk.green(`Profile PDF written`));
   });
-}
-
-function convertToPDF() {
-  console.log(chalk.yellow("convert to PDF"));
-}
+};
 
 async function init() {
   try {
     const data = await askQuestions();
-    const page = await generateHTML.generateHTML(data);
-    await writeToFile(filename, page);
     const responseArr = await getGitResponse(data);
-    const htmlBody = await generateHTML.generateBody(responseArr);
-    await appendToFile(filename, htmlBody);
-  } catch {
-    console.log(chalk.inverse.yellow("there was an error"));
+    const page = generateHTML(data, responseArr);
+    writeToFile(filename, page);
+    convertToPDF(page);
+  } catch (error) {
+    console.log(chalk.inverse.yellow(`There was a problem ${error}`));
   }
 }
 
